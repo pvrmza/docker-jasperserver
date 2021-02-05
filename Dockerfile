@@ -19,14 +19,8 @@ RUN wget https://community.jaspersoft.com/sites/default/files/releases/jaspersof
     sed -i 's/queryLanguagesPro/queryLanguagesCe/g' /usr/local/tomcat/webapps/ROOT/WEB-INF/applicationContext-WebServiceDataSource.xml && \
     rm -rf /tmp/*
 
-
-# Used to wait for the database to start before connecting to it
-# This script is from https://github.com/vishnubob/wait-for-it
-# as recommended by https://docs.docker.com/compose/startup-order/
-ADD files/wait-for-it.sh /wait-for-it.sh
-
-# Used to bootstrap JasperServer the first time it runs and start Tomcat each
-ADD files/entrypoint.sh /entrypoint.sh
+#
+COPY files/wait-for-it.sh files/entrypoint.sh /
 
 #Execute all in one layer so that it keeps the image as small as possible
 RUN chmod a+x /entrypoint.sh && \
@@ -38,8 +32,7 @@ VOLUME ["/jasperserver-import"]
 
 # By default, JasperReports Server only comes with Postgres & MariaDB drivers
 # Copy over other JBDC drivers the deploy-jdbc-jar ant task will put it in right location
-ADD drivers/db2jcc4-no-pdq-in-manifest.jar /usr/src/jasperreports-server/buildomatic/conf_source/db/app-srv-jdbc-drivers/db2jcc4.jar
-ADD drivers/mysql-connector-java-5.1.44-bin.jar /usr/src/jasperreports-server/buildomatic/conf_source/db/app-srv-jdbc-drivers/mysql-connector-java-5.1.44-bin.jar
+COPY drivers/db2jcc4-no-pdq-in-manifest.jar drivers/mysql-connector-java-5.1.44-bin.jar /usr/src/jasperreports-server/buildomatic/conf_source/db/app-srv-jdbc-drivers/
 
 # Copy web.xml with cross-domain enable
 ADD files/web.xml /usr/local/tomcat/conf/
