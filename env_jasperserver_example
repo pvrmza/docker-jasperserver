@@ -1,0 +1,11 @@
+# Database
+JSR_DB_TYPE=mysql
+JSR_DB_HOST=mysql_jasperserver
+JSR_DB_PORT=3306
+JSR_DB_USER=root
+JSR_DB_PASSWORD=mysql
+
+# Active Directory
+JSR_AD_URL="ldaps://dc01.local/DC=local"
+JSR_AD_BIND_DN="CN=sys.jasper,CN=Users,DC=loc"
+JSR_AD_BIND_PASS=jasper.ChangeIT

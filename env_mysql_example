@@ -1,0 +1,5 @@
+MYSQL_USER=jasperserver
+MYSQL_DATABASE=jasperserver
+MYSQL_PASSWORD=jasper.ChangeIT
+MYSQL_ROOT_PASSWORD=CHANGEIT_pass@!
+TZ=America/Argentina/Mendoza
