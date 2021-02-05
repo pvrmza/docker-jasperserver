@@ -20,7 +20,8 @@ RUN wget https://community.jaspersoft.com/sites/default/files/releases/jaspersof
     rm -rf /tmp/*
 
 #
-COPY files/wait-for-it.sh files/entrypoint.sh /
+ADD files/wait-for-it.sh /
+ADD  files/entrypoint.sh /
 
 #Execute all in one layer so that it keeps the image as small as possible
 RUN chmod a+x /entrypoint.sh && \
@@ -30,9 +31,10 @@ RUN chmod a+x /entrypoint.sh && \
 # This volume allows JasperServer export zip files to be automatically imported when bootstrapping
 VOLUME ["/jasperserver-import"]
 
-# By default, JasperReports Server only comes with Postgres & MariaDB drivers
-# Copy over other JBDC drivers the deploy-jdbc-jar ant task will put it in right location
-COPY drivers/db2jcc4-no-pdq-in-manifest.jar drivers/mysql-connector-java-5.1.44-bin.jar /usr/src/jasperreports-server/buildomatic/conf_source/db/app-srv-jdbc-drivers/
+# 
+ADD drivers/db2jcc4-no-pdq-in-manifest.jar  /usr/src/jasperreports-server/buildomatic/conf_source/db/app-srv-jdbc-drivers/
+ADD drivers/mysql-connector-java-5.1.44-bin.jar /usr/src/jasperreports-server/buildomatic/conf_source/db/app-srv-jdbc-drivers/
+
 
 # Copy web.xml with cross-domain enable
 ADD files/web.xml /usr/local/tomcat/conf/
