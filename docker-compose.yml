@@ -9,12 +9,9 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
-
-
-
   jasperserver:
-    #image: retriever/jasperserver:7.2.0
-    image: docker-jasperserver:devel
+    image: pvrmza/docker-jasperserver:latest
+    #image: docker-jasperserver:devel
     restart: always
     env_file:
       - .env_jasperserver
